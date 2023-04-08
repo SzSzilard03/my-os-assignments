@@ -16,7 +16,60 @@ typedef struct Sectionheader{
     int sect_size;
 }Sectionheader;
 
-
+int check_sf(char *path,int *x){
+    int fd = open(path,O_RDONLY);
+    if(fd == -1){
+        return 0;
+    }
+    char magic[2] ;
+    read(fd,magic,2);
+    int header ; read(fd,&header,2);
+    int version ; read(fd,&version,2);
+    char buf[1];
+    int nr_sec ; read(fd,buf,1);
+    nr_sec = buf[0];
+    int max = 0;
+    if(strcmp(magic,"h5") != 0){
+        
+        close(fd);
+        return 0;
+    }
+    else{
+        if(version > 128 || version < 107){
+            
+            close(fd);
+            return 0;
+        }
+        else{
+            if(nr_sec < 3 || nr_sec > 13){
+                
+                close(fd);
+                return 0;
+            }
+            else{
+                 Sectionheader *sheader = malloc(nr_sec*sizeof(Sectionheader));
+                    for(int i = 0;i < nr_sec;i++){
+                        read(fd,sheader[i].sect_name,14);
+                        read(fd,&sheader[i].sect_type,1);
+                        read(fd,&sheader[i].sect_offset,4);
+                        read(fd,&sheader[i].sect_size,4);
+                        if(sheader[i].sect_size > max){
+                            max = sheader[i].sect_size;
+                        }
+                        if(sheader[i].sect_type != 79 && sheader[i].sect_type != 69 && sheader[i].sect_type != 46 && sheader[i].sect_type != 40 && sheader[i].sect_type != 72){
+                            
+                            close(fd);
+                            return 0;
+                        }
+                    }
+                    
+                close(fd);
+                *x = max;
+                return 1;
+            }
+        }
+    }
+}
 int stringStarts(char *str , char *x){
     char *zx = malloc(1700 * sizeof(char));
     zx = strcpy(zx,str);
@@ -237,7 +290,7 @@ void parse(char *path){
    
 }
 
-void extract(char *path,int nr_sec,int line){
+void extract(char *path,int nr_sect,int line){
     int fd = open(path,O_RDONLY);
     if(fd == -1){
         return;
@@ -290,6 +343,50 @@ void extract(char *path,int nr_sec,int line){
             }
         }
     }
+}
+
+void findall_rec(char *path){
+     int x;
+    DIR *dir = NULL;
+    struct dirent *entry = NULL;
+    char fullPath[1512];
+    struct stat statbuf={};
+    dir = opendir(path);
+    
+   
+    while((entry = readdir(dir)) != NULL) {x=-1;
+        if(strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0){
+        snprintf(fullPath, 512, "%s/%s", path, entry->d_name);
+        if(lstat(fullPath, &statbuf) == 0) {
+            if(S_ISDIR(statbuf.st_mode)) {
+                findall_rec(fullPath);
+            } 
+            else{
+                if(check_sf(fullPath,&x) ==1){
+                    if(x <= 1471)
+                    printf("%s\n",fullPath);
+                }
+            }
+            
+        } 
+        }
+    }
+    closedir(dir);
+}
+
+void findall(char *path){
+    DIR *dir = NULL;
+    dir = opendir(path);
+    if(dir != NULL){
+        printf("SUCCESS\n");
+        findall_rec(path);
+    }
+    else{
+        printf("ERROR\ninvalid directory path\n");
+    }
+
+   
+    
 }
 
 int main(int argc, char **argv){
@@ -400,6 +497,12 @@ int main(int argc, char **argv){
             path = strtok(argv[2],"=");
             path=strtok(NULL," ");
             parse(path);
+        }
+        else if(strcmp(argv[1],"findall") == 0){
+            char* path = (char*)malloc(1600*sizeof(char));
+            path = strtok(argv[2],"=");
+            path=strtok(NULL," ");
+            findall(path);
         }
     }
     
