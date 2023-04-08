@@ -180,7 +180,7 @@ int main(int argc, char **argv){
         if(strcmp(argv[1], "variant") == 0){
             printf("10230\n");
         }
-        else {if(strcmp(argv[1],"list") == 0 || strcmp(argv[2],"list") == 0 || strcmp(argv[3],"list") == 0 || strcmp(argv[4],"list") == 0){
+        else {if(strcmp(argv[1],"list") == 0){
             char* path = (char*)malloc(1600*sizeof(char));
             char* nams1 = (char*)malloc(1600*sizeof(char));
             nams1 = "x-1";
@@ -277,6 +277,12 @@ int main(int argc, char **argv){
             list(path,rec,size,nams1);
             
         
+        }
+        if(strcmp(argv[1],"parse")==0){
+            char* path = (char*)malloc(1600*sizeof(char));
+            path = strtok(argv[2],"=");
+            path=strtok(NULL," ");
+            printf("path: %s\n",path);
         }
     }
     
