@@ -9,6 +9,13 @@
 #include <sys/mman.h>
 #include <errno.h>
 
+typedef struct Sectionheader{
+    char sect_name[14];
+    int sect_type;
+    int sect_offset;
+    int sect_size;
+}Sectionheader;
+
 
 int stringStarts(char *str , char *x){
     char *zx = malloc(1700 * sizeof(char));
@@ -174,6 +181,116 @@ void list(char* path,int r,int size,char* nams){
     
 }
 
+void parse(char *path){
+    int fd = open(path,O_RDONLY);
+    if(fd == -1){
+        return;
+    }
+    char magic[2] ;
+    read(fd,magic,2);
+    int header ; read(fd,&header,2);
+    int version ; read(fd,&version,2);
+    char buf[1];
+    int nr_sec ; read(fd,buf,1);
+    nr_sec = buf[0];
+    if(strcmp(magic,"h5") != 0){
+        printf("ERROR\nwrong magic\n");
+        close(fd);
+        return;
+    }
+    else{
+        if(version > 128 || version < 107){
+            printf("ERROR\nwrong version\n");
+            close(fd);
+            return;
+        }
+        else{
+            if(nr_sec < 3 || nr_sec > 13){
+                printf("ERROR\nwrong sect_nr\n");
+                close(fd);
+                return;
+            }
+            else{
+                 Sectionheader *sheader = malloc(nr_sec*sizeof(Sectionheader));
+                    for(int i = 0;i < nr_sec;i++){
+                        read(fd,sheader[i].sect_name,14);
+                        read(fd,&sheader[i].sect_type,1);
+                        read(fd,&sheader[i].sect_offset,4);
+                        read(fd,&sheader[i].sect_size,4);
+                        if(sheader[i].sect_type != 79 && sheader[i].sect_type != 69 && sheader[i].sect_type != 46 && sheader[i].sect_type != 40 && sheader[i].sect_type != 72){
+                            printf("ERROR\nwrong sect_types\n");
+                            close(fd);
+                            return;
+                        }
+                    }
+                    printf("SUCCESS\n");
+                    printf("version=%d\n",version);
+                    printf("nr_sections=%d\n",nr_sec);
+                    for(int i = 0;i < nr_sec;i++)
+                    {
+                        printf("section%d: %s %d %d\n",i+1,sheader[i].sect_name,sheader[i].sect_type,sheader[i].sect_size);
+                    }
+                close(fd);
+            }
+        }
+    }
+   
+}
+
+void extract(char *path,int nr_sec,int line){
+    int fd = open(path,O_RDONLY);
+    if(fd == -1){
+        return;
+    }
+    char magic[2] ;
+    read(fd,magic,2);
+    int header ; read(fd,&header,2);
+    int version ; read(fd,&version,2);
+    char buf[1];
+    int nr_sec ; read(fd,buf,1);
+    nr_sec = buf[0];
+    if(strcmp(magic,"h5") != 0){
+        printf("ERROR\ninvalid file\n");
+        close(fd);
+        return;
+    }
+    else{
+        if(version > 128 || version < 107){
+            printf("ERROR\ninvalid file\n");
+            close(fd);
+            return;
+        }
+        else{
+            if(nr_sec < 3 || nr_sec > 13){
+                printf("ERROR\ninvalid file\n");
+                close(fd);
+                return;
+            }
+            else{
+                 Sectionheader *sheader = malloc(nr_sec*sizeof(Sectionheader));
+                    for(int i = 0;i < nr_sec;i++){
+                        read(fd,sheader[i].sect_name,14);
+                        read(fd,&sheader[i].sect_type,1);
+                        read(fd,&sheader[i].sect_offset,4);
+                        read(fd,&sheader[i].sect_size,4);
+                        if(sheader[i].sect_type != 79 && sheader[i].sect_type != 69 && sheader[i].sect_type != 46 && sheader[i].sect_type != 40 && sheader[i].sect_type != 72){
+                            printf("ERROR\nwrong sect_types\n");
+                            close(fd);
+                            return;
+                        }
+                    }
+                    printf("SUCCESS\n");
+                    printf("version=%d\n",version);
+                    printf("nr_sections=%d\n",nr_sec);
+                    for(int i = 0;i < nr_sec;i++)
+                    {
+                        printf("section%d: %s %d %d\n",i+1,sheader[i].sect_name,sheader[i].sect_type,sheader[i].sect_size);
+                    }
+                close(fd);
+            }
+        }
+    }
+}
 
 int main(int argc, char **argv){
     if(argc >= 2){
@@ -282,7 +399,7 @@ int main(int argc, char **argv){
             char* path = (char*)malloc(1600*sizeof(char));
             path = strtok(argv[2],"=");
             path=strtok(NULL," ");
-            printf("path: %s\n",path);
+            parse(path);
         }
     }
     
