@@ -362,6 +362,7 @@ void findall_rec(char *path){
                 findall_rec(fullPath);
             } 
             else{
+                
                 if(check_sf(fullPath,&x) ==1){
                     if(x <= 1471)
                     printf("%s\n",fullPath);
