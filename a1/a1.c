@@ -290,7 +290,7 @@ void parse(char *path){
    
 }
 
-void extract(char *path,int nr_sect,int line){
+void extract(char *path,int nr_sector,int line){
     int fd = open(path,O_RDONLY);
     if(fd == -1){
         return;
@@ -332,13 +332,9 @@ void extract(char *path,int nr_sect,int line){
                             return;
                         }
                     }
-                    printf("SUCCESS\n");
-                    printf("version=%d\n",version);
-                    printf("nr_sections=%d\n",nr_sec);
-                    for(int i = 0;i < nr_sec;i++)
-                    {
-                        printf("section%d: %s %d %d\n",i+1,sheader[i].sect_name,sheader[i].sect_type,sheader[i].sect_size);
-                    }
+                        
+                    
+                    
                 close(fd);
             }
         }
