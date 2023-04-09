@@ -57,12 +57,12 @@ int check_sf(char *path,int *x){
                             max = sheader[i].sect_size;
                         }
                         if(sheader[i].sect_type != 79 && sheader[i].sect_type != 69 && sheader[i].sect_type != 46 && sheader[i].sect_type != 40 && sheader[i].sect_type != 72){
-                            
+                            free(sheader);
                             close(fd);
                             return 0;
                         }
                     }
-                    
+                    free(sheader);
                 close(fd);
                 *x = max;
                 return 1;
@@ -239,8 +239,9 @@ void parse(char *path){
     if(fd == -1){
         return;
     }
-    char magic[2] ;
+    char magic[3] ;
     read(fd,magic,2);
+    magic[2] = '\0';
     int header ; read(fd,&header,2);
     int version ; read(fd,&version,2);
     char buf[1];
@@ -264,7 +265,7 @@ void parse(char *path){
                 return;
             }
             else{
-                 Sectionheader *sheader = malloc(nr_sec*sizeof(Sectionheader));
+                 Sectionheader *sheader = malloc((nr_sec+1)*sizeof(Sectionheader));
                     for(int i = 0;i < nr_sec;i++){
                         read(fd,sheader[i].sect_name,14);
                         read(fd,&sheader[i].sect_type,1);
@@ -272,6 +273,7 @@ void parse(char *path){
                         read(fd,&sheader[i].sect_size,4);
                         if(sheader[i].sect_type != 79 && sheader[i].sect_type != 69 && sheader[i].sect_type != 46 && sheader[i].sect_type != 40 && sheader[i].sect_type != 72){
                             printf("ERROR\nwrong sect_types\n");
+                            free(sheader);
                             close(fd);
                             return;
                         }
@@ -283,6 +285,7 @@ void parse(char *path){
                     {
                         printf("section%d: %s %d %d\n",i+1,sheader[i].sect_name,sheader[i].sect_type,sheader[i].sect_size);
                     }
+                    free(sheader);
                 close(fd);
             }
         }
