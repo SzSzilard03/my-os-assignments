@@ -21,8 +21,9 @@ int check_sf(char *path,int *x){
     if(fd == -1){
         return 0;
     }
-    char magic[2] ;
+    char magic[3] ;
     read(fd,magic,2);
+    magic[2] = '\0';
     int header ; read(fd,&header,2);
     int version ; read(fd,&version,2);
     char buf[1];
