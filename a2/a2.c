@@ -5,13 +5,45 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include "a2_helper.h"
-
+#include <fcntl.h>
 sem_t semafork;
 sem_t thr;
+sem_t incr;
+sem_t decr;
 int x = 0;
 int ended = 0;
 int counter;
 int t11 = 0;
+int unended;
+
+
+void* thread6(void* arg)
+{
+    sem_t *st1 = sem_open("st1",O_CREAT,0644,0);
+    sem_t *st2 = sem_open("st2",O_CREAT,0644,0);
+    int ID = *((int*)arg);
+    
+    
+    if(ID == 1){
+        info(BEGIN,6,ID);
+        info(END,6,ID);
+        sem_post(st1);
+    }
+    else{
+        if(ID == 3){
+            sem_wait(st2);
+            info(BEGIN,6,ID);
+            info(END,6,ID);
+        }
+        else
+            {
+                info(BEGIN,6,ID);
+                info(END,6,ID);
+            }
+    }
+    pthread_exit(NULL);
+}
+
 
 
 void* thread2(void* arg){
@@ -19,23 +51,35 @@ void* thread2(void* arg){
 
    
 sem_wait(&semafork);
+    sem_wait(&incr);
     counter++;
-
+    sem_post(&incr);
+    
     if(ID == 11){
         
         info(BEGIN,2,ID);
-      
-        
-        info(END,2,ID);
-        counter--;
+        unended = 1;
     }
     else{
-            
-            info(BEGIN,2,ID);
-
-            info(END,2,ID);
-            counter--;
+        info(BEGIN,2,ID);
+    }
+    sem_wait(&thr);
+    if(unended == 1 && counter == 5){
+    
         
+        info(END,2,11);
+        sem_wait(&decr);
+        counter--;
+        unended = 0;
+        sem_post(&decr);
+        
+    }
+    sem_post(&thr);
+    if(ID != 11){          
+            info(END,2,ID);
+            sem_wait(&decr);
+            counter--;
+            sem_post(&decr);
     }
     
 sem_post(&semafork);
@@ -44,9 +88,12 @@ sem_post(&semafork);
 
 
 
+
 void* thread_function(void* arg)
 {
     int ID;
+    sem_t *st1 = sem_open("st1",O_CREAT,0644,0);
+    sem_t *st2 = sem_open("st2",O_CREAT,0644,0);
     ID = *((int*)arg);
     if(ID == 1){
         while(x == 0){
@@ -64,8 +111,17 @@ void* thread_function(void* arg)
         info(END,4,ID);
     }
     else{
-        info(BEGIN,4,ID);
-        info(END,4,ID);
+        if(ID == 4){
+            sem_wait(st1);
+            info(BEGIN,4,ID);
+            info(END,4,ID);
+            sem_post(st2);
+        }
+        else{
+            info(BEGIN,4,ID);
+            info(END,4,ID);
+        }
+        
     }
     pthread_exit(NULL);
 
@@ -91,6 +147,8 @@ if (pid == 0) {
 info(BEGIN, 2, 0);
 sem_init(&semafork,0,5);
 sem_init(&thr,0,1);
+sem_init(&incr,0,1);
+sem_init(&decr,0,1);
 
 
     pthread_t tid2_1;
@@ -210,6 +268,9 @@ id2_30=30,id2_31=31,id2_32=32,id2_33=33,id2_34=34,id2_35=35,id2_36=36,id2_37=37;
     pthread_join(tid2_37,NULL);
 
 sem_destroy(&semafork);
+sem_destroy(&thr);
+sem_destroy(&incr);
+sem_destroy(&decr);
 
 
 
@@ -284,6 +345,14 @@ else{
         int pid6 = fork();
         if(pid6 == 0){
             info(BEGIN,6,0);
+            pthread_t tid6[6];
+            int id6[6]={1,2,3,4,5,6};
+            for(int i=0;i<6;i++){
+                pthread_create(&tid6[i],NULL,thread6,&id6[i]);
+            }
+            for(int i=0;i<6;i++){
+                pthread_join(tid6[i],NULL);
+            }
             info(END,6,0);
         }
         else{
