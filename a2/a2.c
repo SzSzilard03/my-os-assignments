@@ -64,9 +64,7 @@ sem_wait(&semafork);
         info(BEGIN,2,ID);
     }
     sem_wait(&thr);
-    if(unended == 1 && counter == 5){
-    
-        
+    if(unended == 1 && (counter == 5 )){
         info(END,2,11);
         sem_wait(&decr);
         counter--;
@@ -75,7 +73,7 @@ sem_wait(&semafork);
         
     }
     sem_post(&thr);
-    if(ID != 11){          
+    if(ID != 11 && unended == 0){          
             info(END,2,ID);
             sem_wait(&decr);
             counter--;
@@ -191,6 +189,8 @@ sem_init(&decr,0,1);
 int id2_1 = 1,id2_2 = 2,id2_3 =3,id2_4 =4,id2_5=5,id2_6=6,id2_7=7,id2_8=8,id2_9=9,id2_10=10,
 id2_11=11,id2_12=12,id2_13=13,id2_14=14,id2_15=15,id2_16=16,id2_17=17,id2_18=18,id2_19=19,id2_20=20,id2_21=21,id2_22=22,id2_23=23,id2_24=24,id2_25=25,id2_26=26,id2_27=27,id2_28=28,id2_29=29,
 id2_30=30,id2_31=31,id2_32=32,id2_33=33,id2_34=34,id2_35=35,id2_36=36,id2_37=37;
+    
+    pthread_create(&tid2_11,NULL,thread2,&id2_11);
     pthread_create(&tid2_1,NULL,thread2,&id2_1);
     pthread_create(&tid2_2,NULL,thread2,&id2_2);
     pthread_create(&tid2_3,NULL,thread2,&id2_3);
@@ -201,7 +201,6 @@ id2_30=30,id2_31=31,id2_32=32,id2_33=33,id2_34=34,id2_35=35,id2_36=36,id2_37=37;
     pthread_create(&tid2_8,NULL,thread2,&id2_8);
     pthread_create(&tid2_9,NULL,thread2,&id2_9);
     pthread_create(&tid2_10,NULL,thread2,&id2_10);
-    pthread_create(&tid2_11,NULL,thread2,&id2_11);
     pthread_create(&tid2_12,NULL,thread2,&id2_12);
     pthread_create(&tid2_13,NULL,thread2,&id2_13);
     pthread_create(&tid2_14,NULL,thread2,&id2_14);
