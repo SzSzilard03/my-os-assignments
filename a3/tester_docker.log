@@ -1,20 +1,31 @@
 [1;35mTesting ping...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'ECHO'
+[TESTER] received string 'ECHO'
+[TESTER] received number 10230
+[TESTER] received string 'VARIANT'
 [TESTER] sending string 'EXIT'
-Test score: 1 / 10
+Test score: 10 / 10
 [1;35mTesting shm1...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'CREATE_SHM'
 [TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] shm with name /BF2oU7W not found
 [TESTER] sending string 'EXIT'
 Test score: 1 / 10
 [1;35mTesting shm_write...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'CREATE_SHM'
 [TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'WRITE_TO_SHM'
+[TESTER] sending number 14298
+[TESTER] sending number 5028369
 [TESTER] sending string 'EXIT'
-Test score: 1 / 10
+Test score: 3 / 10
 [1;35mTesting map_inexistent...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'MAP_FILE'
@@ -31,21 +42,32 @@ Test score: 1 / 5
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'CREATE_SHM'
 [TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/TJlTO0ru31.dJ4'
 [TESTER] sending string 'EXIT'
-Test score: 1 / 10
+Test score: 2 / 10
 [1;35mTesting read_section...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'CREATE_SHM'
 [TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/jQRpmyCJOf.4nT'
 [TESTER] sending string 'EXIT'
 Test score: 1 / 10
 [1;35mTesting read_logical...[0m
 [TESTER] received string 'HELLO'
 [TESTER] sending string 'CREATE_SHM'
 [TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/trbLlAi4tF.BYw'
 [TESTER] sending string 'EXIT'
 Test score: 1 / 10
 
-Total score: 8 / 70
-[1;31mThere were some compilation warnings. A 10% penalty will be applied.[0m
-Assignment grade: 10.29 / 100
+Total score: 20 / 70
+Assignment grade: 28.57 / 100
