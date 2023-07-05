@@ -1,0 +1,144 @@
+[1;35mTesting ping...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'ECHO'
+[TESTER] received string 'ECHO'
+[TESTER] received number 10230
+[TESTER] received string 'VARIANT'
+[TESTER] sending string 'EXIT'
+Test score: 10 / 10
+[1;35mTesting shm1...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'EXIT'
+Test score: 10 / 10
+[1;35mTesting shm_write...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'WRITE_TO_SHM'
+[TESTER] sending number 14298
+[TESTER] sending number 5028369
+[TESTER] sending string 'EXIT'
+Test score: 3 / 10
+[1;35mTesting map_inexistent...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/buyGAzuq0dJr.pN0'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 5
+[1;35mTesting map1...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/TJlTO0ru31.dJ4'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 5
+[1;35mTesting read_offset...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/TJlTO0ru31.dJ4'
+[TESTER] sending string 'EXIT'
+Test score: 2 / 10
+[1;35mTesting read_section...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/jQRpmyCJOf.4nT'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 10
+[1;35mTesting read_logical...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/trbLlAi4tF.BYw'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 10
+
+Total score: 29 / 70
+Assignment grade: 41.43 / 100
+[1;35mTesting ping...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'ECHO'
+[TESTER] received string 'ECHO'
+[TESTER] received number 10230
+[TESTER] received string 'VARIANT'
+[TESTER] sending string 'EXIT'
+Test score: 10 / 10
+[1;35mTesting shm1...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'EXIT'
+Test score: 10 / 10
+[1;35mTesting shm_write...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'WRITE_TO_SHM'
+[TESTER] sending number 14298
+[TESTER] sending number 5028369
+[TESTER] sending string 'EXIT'
+Test score: 3 / 10
+[1;35mTesting map_inexistent...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/buyGAzuq0dJr.pN0'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 5
+[1;35mTesting map1...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/TJlTO0ru31.dJ4'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 5
+[1;35mTesting read_offset...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/TJlTO0ru31.dJ4'
+[TESTER] sending string 'EXIT'
+Test score: 2 / 10
+[1;35mTesting read_section...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/jQRpmyCJOf.4nT'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 10
+[1;35mTesting read_logical...[0m
+[TESTER] received string 'HELLO'
+[TESTER] sending string 'CREATE_SHM'
+[TESTER] sending number 4857058
+[TESTER] received string 'CREATE_SHM'
+[TESTER] received string 'SUCCESS'
+[TESTER] sending string 'MAP_FILE'
+[TESTER] sending string 'test_root/trbLlAi4tF.BYw'
+[TESTER] sending string 'EXIT'
+Test score: 1 / 10
+
+Total score: 29 / 70
+Assignment grade: 41.43 / 100
